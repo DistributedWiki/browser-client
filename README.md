@@ -8,9 +8,7 @@ Run 'npm run deploy-and-run' - this will clone contract repo and deploy to a loc
 Next step is to open chrome with metamask extension and connect to custom RPC (http://localhost:7545). Then import one account
 from ganache and you're ready to use the app. 
 
-Smart contract addresses are stored in auto-generated TS classes in 'build' directory. These classes are generated on deploy-and-run command.
-
-XXX: this is just for testing
+Top level smart contract address is stored in auto-generated TS classes in 'build' directory. This class is generated on deploy-and-run command.
 
 ## Development server
 

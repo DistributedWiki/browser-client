@@ -9,17 +9,12 @@ import {ContractService} from "./contract.service";
 export class AppComponent {
   title = 'Distributed wikipedia';
   articleTitle: string;
-  articleData: string = 'empty'; // TODO article should be some class
-  articleInputData: string;
+  showArticle: boolean = false;
 
   constructor(private contractService: ContractService) { }
 
-  async displayArticle() {
-    this.articleData = await this.contractService.getArticle(this.articleTitle);
-  }
-
-  async modifyArticle() {
-    await this.contractService.modifyArticle(this.articleInputData, this.articleTitle);
+  async createArticle() {
+    await this.contractService.createArticle("", this.articleTitle);
   }
 
 }

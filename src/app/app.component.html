@@ -3,12 +3,15 @@
     Welcome to {{ title }}!
   </h1>
 </div>
-<label> title:
-  <input [(ngModel)]="articleTitle" placeholder="articleTitle">
-  <input [(ngModel)]="articleInputData" placeholder="articleData">
 
-  <textarea>{{articleData}}</textarea>
-</label>
+<div *ngIf="!showArticle">
+  <label> title:
+    <input [(ngModel)]="articleTitle" placeholder="articleTitle">
+  </label>
+  <button (click)="createArticle()">create Article</button>
+  <button (click)="showArticle=!showArticle">show article</button>
+</div>
 
-<button (click)="displayArticle()">Get article</button>
-<button (click)="modifyArticle()">Modify article</button>
+<div *ngIf="showArticle">
+  <app-article-view [articleTitle]="articleTitle"></app-article-view>
+</div>

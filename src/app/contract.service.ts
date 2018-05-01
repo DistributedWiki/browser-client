@@ -55,22 +55,53 @@ export class ContractService {
     return Promise.resolve(this.account);
   }
 
-  public createArticle(data: any, title: string){
-    // TODO
+  private titleHash(title: string): BigNumber {
+    return new BigNumber(this.web3Service.web3.sha3(title));
+  }
+
+  private async articleByTitle(title: string): Promise<Article> {
+    let articleAddress = await this.topLevel.getArticle(this.titleHash(title));
+    return new Article(this.web3Service.web3, articleAddress);
+  }
+
+  private async getTxParams(): Promise<object> {
+    let gasPrice = await this.getGasPrice();
+    let account = await this.getAccount();
+
+    return {gas: 1000000, gasPrice: gasPrice, from: account}; //  TODO - gas amount
+  }
+
+  public async createArticle(data: any, title: string){
+    let IpfsID = '0x1';
+
+    // TODO - store data on IPFS and make IpfsID point to real ID
+
+    let txParams = await this.getTxParams();
+
+    this.topLevel.createArticleTx(this.titleHash(title), new BigNumber(IpfsID)).send(txParams).catch(function (reason) {
+      alert(reason);
+    });
   }
 
   public async modifyArticle(data: any, title: string){
-    // TODO
+    // TODO - update IPFS data
+
+    let article = await this.articleByTitle(title);
+    let txParams = await this.getTxParams();
+
+    article.updateTx(new BigNumber('0x1')).send(txParams); // TODO - ID from IPFS
   }
 
-  // TODO - title instead of address?
-  public getArticleInfo(title: string): any {
-    // TODO
+  public async getArticleInfo(title: string): Promise<string> {
+    let article = await this.articleByTitle(title);
+
+    return "TODO";
   }
 
-  public getArticle(title: string): any {
-    // TODO
-  }
+  public async getArticle(title: string): Promise<string> {
+    let article = await this.articleByTitle(title);
+    let IpfsID = await article.getArticleID;
 
-  // await this.article.updateTx(new BigNumber('0x1')).send({gas: 100000, gasPrice: gasPrice, from: account});
+    return IpfsID.toString(); // TODO - return data from IPFS
+  }
 }
