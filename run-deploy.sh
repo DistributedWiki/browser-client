@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# this file deploys smart contract and saves its addresses to file 'addresses.out'
-# Additionally it creates TS classes (wrappers) of name Contract_nameAddress which contain one static variable 'address'
-# which cane be used inside TS code to obtain smart contract address
+# this file deploys smart contracts and saves top level smart contract address to address.out
+# Additionally it creates TopLevelAddress.ts file in build directory -- sets 'address' variable to a valid address
 
 # exit on error
 set -e
@@ -14,21 +13,16 @@ git clone https://github.com/chorig9/blockchain contract-repo
 
 cd contract-repo
 git checkout chorig9/ch32/write-article-smart-contract-prototype # TODO - remove - use master (or paremetrized)
-npm run build | grep ": 0x" > ../addresses.out # save addresses of deployed contracts to a file
-                                               # pattern is: Contract: 0x...
+npm run build | grep "TopLevel: 0x" | cut -d : -f 2 | sed 's/ //g' > ../address.out
 cd ..
 
-cat addresses.out | while read line
-do
-   name=$(echo $line | cut -d : -f 1 | sed 's/ //g')
-   address=$(echo $line | cut -d : -f 2 | sed 's/ //g')
-   addressClass="
-        export class "$name"Address {
+address=$(cat address.out)
+addressClass="
+        export class TopLevelAddress {
               static address: string = '"$address"';
          }"
 
-   echo $addressClass > $name"Address.ts"
-done
+echo $addressClass > "TopLevelAddress.ts"
 
 ../node_modules/.bin/typechain --force --outDir ../src/app/contracts './contract-repo/build/contracts/*.json'
 

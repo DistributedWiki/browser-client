@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import {Article} from "./contracts/Article";
+import {TopLevel} from './contracts/TopLevel';
 import {Web3Service} from "./web3.service";
 import BigNumber from "bignumber.js/bignumber";
-import {ArticleAddress} from "../../build/ArticleAddress"; // TODO - this is just wa - maybe deploy contract from web3?
+import {TopLevelAddress} from "../../build/TopLevelAddress";
 
 // This service encapsulates IPFS and smart contracts APIs and provides methods for
 // adding, modifying, searching and retrieving articles
 @Injectable()
 export class ContractService {
-  article: Article;
+  topLevel: TopLevel;
   gasPrice: string;
   account: string;
 
   constructor(private web3Service: Web3Service) {
-    this.article = new Article(this.web3Service.web3, ArticleAddress.address);
+    this.topLevel = new TopLevel(this.web3Service.web3, TopLevelAddress.address);
   }
 
   private async getGasPrice(): Promise<string> {
@@ -54,15 +55,12 @@ export class ContractService {
     return Promise.resolve(this.account);
   }
 
-  public createArticle(data: any){
+  public createArticle(data: any, title: string){
     // TODO
   }
 
   public async modifyArticle(data: any, title: string){
-    let account = await this.getAccount();
-    let gasPrice = await this.getGasPrice();
-
-    await this.article.updateTx(new BigNumber('0x1')).send({gas: 100000, gasPrice: gasPrice, from: account});
+    // TODO
   }
 
   // TODO - title instead of address?
@@ -71,8 +69,7 @@ export class ContractService {
   }
 
   public getArticle(title: string): any {
-    // TODO - read article's IPFS id, fetch data from IPFS and return
-    return this.article.getArticleID;
+    // TODO
   }
 
   // await this.article.updateTx(new BigNumber('0x1')).send({gas: 100000, gasPrice: gasPrice, from: account});
