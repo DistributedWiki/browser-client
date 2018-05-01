@@ -1,0 +1,14 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<label> title:
+  <input [(ngModel)]="articleTitle" placeholder="articleTitle">
+  <input [(ngModel)]="articleInputData" placeholder="articleData">
+
+  <textarea>{{articleData}}</textarea>
+</label>
+
+<button (click)="displayArticle()">Get article</button>
+<button (click)="modifyArticle()">Modify article</button>
