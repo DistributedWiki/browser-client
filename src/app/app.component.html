@@ -1,0 +1,17 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+
+<div *ngIf="!showArticle">
+  <label> title:
+    <input [(ngModel)]="articleTitle" placeholder="articleTitle">
+  </label>
+  <button (click)="createArticle()">create Article</button>
+  <button (click)="showArticle=!showArticle">show article</button>
+</div>
+
+<div *ngIf="showArticle">
+  <app-article-view [articleTitle]="articleTitle"></app-article-view>
+</div>
