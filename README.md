@@ -10,6 +10,15 @@ from ganache and you're ready to use the app.
 
 Top level smart contract address is stored in auto-generated TS classes in 'build' directory. This class is generated on deploy-and-run command.
 
+## IPFS integration
+
+Client should have IPFS deamon running (see IPFS docs) with proper configs to enable CORS (see js-ipfs-api README for details):
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*"]"
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"POST\", \"GET\"]"
+
+Api server should be running on port 5001.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

@@ -12,6 +12,10 @@
   <button (click)="showArticle=!showArticle">show article</button>
 </div>
 
+<div *ngIf="!showArticle">
+  <input [(ngModel)]="data" placeholder="data">
+</div>
+
 <div *ngIf="showArticle">
   <app-article-view [articleTitle]="articleTitle"></app-article-view>
 </div>

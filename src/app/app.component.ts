@@ -7,14 +7,15 @@ import {ContractService} from "./contract.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Distributed wikipedia';
-  articleTitle: string;
+  title = 'Distributed wikipedia';articleTitle: string;
+  data: string;
   showArticle: boolean = false;
 
-  constructor(private contractService: ContractService) { }
+  constructor(private contractService: ContractService) {
+  }
 
   async createArticle() {
-    await this.contractService.createArticle("", this.articleTitle);
+    await this.contractService.createArticle(this.data, this.articleTitle);
   }
 
 }

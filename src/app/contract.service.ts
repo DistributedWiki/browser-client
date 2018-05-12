@@ -4,6 +4,7 @@ import {TopLevel} from './contracts/TopLevel';
 import {Web3Service} from "./web3.service";
 import BigNumber from "bignumber.js/bignumber";
 import {TopLevelAddress} from "../../build/TopLevelAddress";
+import {StorageService} from './storage.service';
 
 // This service encapsulates IPFS and smart contracts APIs and provides methods for
 // adding, modifying, searching and retrieving articles
@@ -13,7 +14,7 @@ export class ContractService {
   gasPrice: string;
   account: string;
 
-  constructor(private web3Service: Web3Service) {
+  constructor(private web3Service: Web3Service, private storageService: StorageService) {
     this.topLevel = new TopLevel(this.web3Service.web3, TopLevelAddress.address);
   }
 
@@ -71,21 +72,19 @@ export class ContractService {
     return {gas: 1000000, gasPrice: gasPrice, from: account}; //  TODO - gas amount
   }
 
-  public async createArticle(data: any, title: string){
-    let IpfsID = '0x1';
-
-    // TODO - store data on IPFS and make IpfsID point to real ID
-
+  public async createArticle(data: string, title: string){
+    let IpfsID = await this.storageService.addFile(data);
     let txParams = await this.getTxParams();
 
-    this.topLevel.createArticleTx(this.titleHash(title), new BigNumber(IpfsID)).send(txParams).catch(function (reason) {
+    // TODO error handling when there is already article with same title (hash)
+    // probably can use return value from createArticleTX to figure that out
+    this.topLevel.createArticleTx(this.titleHash(title), IpfsID).send(txParams).catch(function (reason) {
       alert(reason);
     });
   }
 
   public async modifyArticle(data: any, title: string){
     // TODO - update IPFS data
-
     let article = await this.articleByTitle(title);
     let txParams = await this.getTxParams();
 
@@ -102,6 +101,6 @@ export class ContractService {
     let article = await this.articleByTitle(title);
     let IpfsID = await article.getArticleID;
 
-    return IpfsID.toString(); // TODO - return data from IPFS
+    return await this.storageService.getFile(IpfsID);
   }
 }

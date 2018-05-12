@@ -12,7 +12,6 @@ cd build
 git clone https://github.com/chorig9/blockchain contract-repo
 
 cd contract-repo
-git checkout chorig9/ch32/write-article-smart-contract-prototype # TODO - remove - use master (or paremetrized)
 npm run build | grep "TopLevel: 0x" | cut -d : -f 2 | sed 's/ //g' > ../address.out
 cd ..
 

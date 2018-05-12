@@ -4,14 +4,13 @@ import { AppComponent } from './app.component';
 import {Web3Service} from './web3.service';
 import {FormsModule} from '@angular/forms';
 import {ContractService} from "./contract.service";
-import { ArticlesListComponent } from './articles-list/articles-list.component';
 import { ArticleViewComponent } from './article-view/article-view.component';
+import {StorageService} from './storage.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ArticlesListComponent,
     ArticleViewComponent
   ],
   imports: [
@@ -20,7 +19,8 @@ import { ArticleViewComponent } from './article-view/article-view.component';
   ],
   providers: [
     Web3Service,
-    ContractService
+    ContractService,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })
