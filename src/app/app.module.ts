@@ -6,12 +6,14 @@ import {FormsModule} from '@angular/forms';
 import {ContractService} from "./contract.service";
 import { ArticleViewComponent } from './article-view/article-view.component';
 import {StorageService} from './storage.service';
+import { ArticleCreateComponent } from './article-create/article-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ArticleViewComponent
+    ArticleViewComponent,
+    ArticleCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import {ContractService} from "./contract.service";
+
+enum State {
+  main,
+  create,
+  view
+};
 
 @Component({
   selector: 'app-root',
@@ -7,15 +12,15 @@ import {ContractService} from "./contract.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Distributed wikipedia';articleTitle: string;
-  data: string;
-  showArticle: boolean = false;
+  title = 'Distributed wikipedia';
+  state: State;
 
-  constructor(private contractService: ContractService) {
+  constructor() {
+    this.state = State.main;
   }
 
   async createArticle() {
-    await this.contractService.createArticle(this.data, this.articleTitle);
+    
   }
 
 }
