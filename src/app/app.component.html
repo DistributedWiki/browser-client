@@ -4,14 +4,22 @@
   </h1>
 </div>
 
-<div *ngIf="!showArticle">
+<div *ngIf="state == 0">
   <label> title:
     <input [(ngModel)]="articleTitle" placeholder="articleTitle">
   </label>
-  <button (click)="createArticle()">create Article</button>
-  <button (click)="showArticle=!showArticle">show article</button>
+  <button (click)="state=2">show article</button>
+  <p></p>
+  <button (click)="state=1">create Article</button>
 </div>
 
-<div *ngIf="showArticle">
+<div *ngIf="state == 2">
   <app-article-view [articleTitle]="articleTitle"></app-article-view>
+  <button (click)="state = 0">back</button>
 </div>
+
+<div *ngIf="state == 1">
+  <app-article-create></app-article-create>
+  <button (click)="state = 0">back</button>
+</div>
+
