@@ -9,7 +9,7 @@ export class StorageService {
   ipfs: ipfsAPI;
 
   constructor() {
-    this.ipfs =  ipfsAPI('/ip4/127.0.0.1/tcp/5001');
+    this.ipfs =  ipfsAPI('https://ropsten.infura.io/OQe96S6X8l5PM7NexvCM');
   }
 
   private stringToBytes32(str: string): BigNumber {

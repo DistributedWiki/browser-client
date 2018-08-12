@@ -6,7 +6,6 @@
 /tmp
 /out-tsc
 /build
-/src/app/contracts
 
 # dependencies
 /node_modules

@@ -3,7 +3,6 @@ import {Article} from "./contracts/Article";
 import {TopLevel} from './contracts/TopLevel';
 import {Web3Service} from "./web3.service";
 import BigNumber from "bignumber.js/bignumber";
-import {TopLevelAddress} from "../../build/TopLevelAddress";
 import {StorageService} from './storage.service';
 
 // This service encapsulates IPFS and smart contracts APIs and provides methods for
@@ -15,7 +14,7 @@ export class ContractService {
   account: string;
 
   constructor(private web3Service: Web3Service, private storageService: StorageService) {
-    this.topLevel = new TopLevel(this.web3Service.web3, TopLevelAddress.address);
+    this.topLevel = new TopLevel(this.web3Service.web3, '0x40142c307848A3a8f55b4234Ee0B2E62838AA8B2');
   }
 
   private async getGasPrice(): Promise<string> {
@@ -57,6 +56,7 @@ export class ContractService {
   }
 
   private titleHash(title: string): BigNumber {
+    console.log(this.web3Service.web3.sha3(title))
     return new BigNumber(this.web3Service.web3.sha3(title));
   }
 
